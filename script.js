@@ -13,8 +13,11 @@ document.getElementById('checkButton').addEventListener('click', function() {
   .then(data => {
     // Display the grammar checking results
     if (data.matches && data.matches.length > 0) {
-      var results = data.matches.map(match => match.message).join('<br>');
-      document.getElementById('results').innerHTML = results;
+      data.matches.reverse().forEach(match => {
+        text = text.substring(0, match.offset) + match.replacements[0].value + text.substring(match.offset + match.length);
+      });
+      document.getElementById('results').innerHTML = "Grammar mistakes fixed!";
+      document.getElementById('textInput').value = text;
     } else {
       document.getElementById('results').innerHTML = "No grammar mistakes found!";
     }
